@@ -3,7 +3,8 @@ using OpenQA.Selenium.Interactions;
 
 namespace SpecFlowSchool.Specs.Pages
 {
-    internal class HomePage
+    using SpecFlowSchool.Specs.Constants;
+    internal partial class HomePage : PageBase
     {
         private const string defaultLink = "https://demoqa.com";
         private IWebDriver driver;
@@ -11,11 +12,19 @@ namespace SpecFlowSchool.Specs.Pages
         string clickableDivForCategory(string categoryName) => $"//h5[text()='{categoryName}']//ancestor::div[contains(@class, 'card mt-4 top-card')]";
 
         
-        public HomePage(IWebDriver driver)
-        {
-            this.driver = driver;
-            driver.Url = defaultLink;
+        //public HomePage(IWebDriver driver)
+        //{
+        //    this.driver = driver;
+        //    driver.Url = defaultLink;
 
+        //    CloseConsentPopup(driver);
+        //    HideAds(driver);
+        //}
+
+        public HomePage(PageContext context)
+         : base(context)
+        {
+            driver.Url = defaultLink;
             CloseConsentPopup(driver);
             HideAds(driver);
         }
@@ -31,12 +40,12 @@ namespace SpecFlowSchool.Specs.Pages
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.visibility='hidden'", elem);
         }
 
-        public ElementsCategoryPage selectCategory(string categoryName)
+        public void SelectCategory(string categoryName)
         {            
             IWebElement categoryElement = driver.FindElement(By.XPath(clickableDivForCategory(categoryName)));
             new Actions(driver).MoveToElement(categoryElement).Click(categoryElement).Perform();
 
-            return new ElementsCategoryPage(driver);
+            //return new ElementsCategoryPage();
         }
     }
 }

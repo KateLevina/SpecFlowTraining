@@ -3,14 +3,19 @@ using OpenQA.Selenium;
 
 namespace SpecFlowSchool.Specs.Pages
 {
-    internal class BaseCategoryPage
+    internal class BaseCategoryPage : PageBase
     {
         protected IWebDriver driver;
         string clickableDivForSection(string sectionName) => $"//*[text()='{sectionName}']//ancestor::*[contains(@class, 'btn-light')]";
         
-        public BaseCategoryPage(IWebDriver driver)
+        //public BaseCategoryPage(IWebDriver driver)
+        //{
+        //    this.driver = driver;
+        //}
+
+        public BaseCategoryPage(PageContext context)
+    : base(context)
         {
-            this.driver = driver;
         }
 
         public void SelectSection(string sectionName)

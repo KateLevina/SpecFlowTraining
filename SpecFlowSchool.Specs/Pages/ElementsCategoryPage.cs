@@ -6,7 +6,11 @@ namespace SpecFlowSchool.Specs.Pages
 
     internal class ElementsCategoryPage : BaseCategoryPage
     {
-        public ElementsCategoryPage(IWebDriver driver) : base(driver)
+        //public ElementsCategoryPage(IWebDriver driver) : base(driver)
+        //{
+        //}
+
+        public ElementsCategoryPage(PageContext context) : base(context)
         {
         }
 
