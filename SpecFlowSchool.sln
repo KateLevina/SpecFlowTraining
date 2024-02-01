@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowSchool", "SpecFlowSchool\SpecFlowSchool.csproj", "{3F22A6BC-88B2-4C89-A296-EA4E8BAAA414}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowSchool.Specs", "SpecFlowSchool.Specs\SpecFlowSchool.Specs.csproj", "{34A0D3D9-73AB-4688-81ED-EA4A1268BB99}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F22A6BC-88B2-4C89-A296-EA4E8BAAA414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F22A6BC-88B2-4C89-A296-EA4E8BAAA414}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F22A6BC-88B2-4C89-A296-EA4E8BAAA414}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F22A6BC-88B2-4C89-A296-EA4E8BAAA414}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34A0D3D9-73AB-4688-81ED-EA4A1268BB99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34A0D3D9-73AB-4688-81ED-EA4A1268BB99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34A0D3D9-73AB-4688-81ED-EA4A1268BB99}.Release|Any CPU.ActiveCfg = Release|Any CPU

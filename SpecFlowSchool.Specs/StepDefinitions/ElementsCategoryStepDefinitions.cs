@@ -13,24 +13,25 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         public ElementsCategoryStepDefinitions(IWebDriver driver)
         {
             this.driver = driver;
-        }
-
-        [Given(@"https://demoqa\.com/ is opened")]
-        public void GivenHttpsDemoqa_ComIsOpened()
-        {
             homePage = new HomePage(driver);
         }
 
-        [Given(@"Selected category is Elements")]
-        public void GivenSelectedCategoryIsElements()
+        [Given(@"DemoQA Home page is opened")]
+        public void GivenHttpsDemoqa_ComIsOpened()
         {
-            elementsCategoryPage = homePage.selectCategory("Elements");
+          
         }
 
-        [Given(@"Selected section is Buttons")]
-        public void GivenSelectedSectionIsButtons()
+        [Given(@"Selected category is (.*)")]
+        public void GivenSelectedCategoryIsElements(string categoryName)
         {
-            elementsCategoryPage.SelectSection("Buttons");
+            elementsCategoryPage = homePage.selectCategory(categoryName);
+        }
+
+        [Given(@"Selected section is (.*)")]
+        public void GivenSelectedSectionIsButtons(string sectionName)
+        {
+            elementsCategoryPage.SelectSection(sectionName);
         }
 
         [When(@"user interacts with (.*) button appropriate way")]

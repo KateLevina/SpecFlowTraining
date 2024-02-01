@@ -1,7 +1,7 @@
 ﻿Feature: Elements category
 
 Background:
-	Given https://demoqa.com/ is opened
+	Given DemoQA Home page is opened
 	And Selected category is Elements
 
 #@elements_category

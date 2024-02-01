@@ -5,19 +5,28 @@ namespace SpecFlowSchool.Specs.Pages
 {
     internal class HomePage
     {
+        private const string defaultLink = "https://demoqa.com";
         private IWebDriver driver;
         By btnConsentUseData = By.XPath($"//button[contains(@class, 'fc-cta-consent')]");
         string clickableDivForCategory(string categoryName) => $"//h5[text()='{categoryName}']//ancestor::div[contains(@class, 'card mt-4 top-card')]";
 
+        
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
-            driver.Url = "https://demoqa.com";
+            driver.Url = defaultLink;
 
-            //Close popup with data use consent
+            CloseConsentPopup(driver);
+            HideAds(driver);
+        }
+
+        private void CloseConsentPopup(IWebDriver driver)
+        {
             driver.FindElement(btnConsentUseData).Click();
+        }
 
-            //hide ads
+        private void HideAds(IWebDriver driver)
+        {
             IWebElement elem = driver.FindElement(By.Id("fixedban"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.visibility='hidden'", elem);
         }

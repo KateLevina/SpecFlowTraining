@@ -31,10 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpecFlowSchool\SpecFlowSchool.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <SpecFlowFeatureFiles Update="Features\Elements.feature">    
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
