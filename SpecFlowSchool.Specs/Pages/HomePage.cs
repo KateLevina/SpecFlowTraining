@@ -1,42 +1,44 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace SpecFlowSchool.Specs.Pages
 {
-    internal class HomePage
+    internal partial class HomePage : PageBase
     {
-        private const string defaultLink = "https://demoqa.com";
-        private IWebDriver driver;
-        By btnConsentUseData = By.XPath($"//button[contains(@class, 'fc-cta-consent')]");
-        string clickableDivForCategory(string categoryName) => $"//h5[text()='{categoryName}']//ancestor::div[contains(@class, 'card mt-4 top-card')]";
+        public const string DefaultLink = "https://demoqa.com";
+        private const string googleAdsItemId = "fixedban";
+        private const string btnConsentUseData = $"//button[contains(@class, 'fc-cta-consent')]";
+        private string clickableDivForCategory(string categoryName) => $"//h5[text()='{categoryName}']//ancestor::div[contains(@class, 'card mt-4 top-card')]";
 
-        
-        public HomePage(IWebDriver driver)
+        public HomePage(PageContext context) : base(context) { }
+
+        public void CloseConsentPopup()
         {
-            this.driver = driver;
-            driver.Url = defaultLink;
-
-            CloseConsentPopup(driver);
-            HideAds(driver);
+            try
+            {
+                ClickByXPath(btnConsentUseData, 2);
+            }
+            catch
+            {
+                // no need to process exception, it means that popup for consent did not appeared this time
+            }
         }
 
-        private void CloseConsentPopup(IWebDriver driver)
+        public void HideAds()
         {
-            driver.FindElement(btnConsentUseData).Click();
+            try
+            {
+                ExecuteScript("arguments[0].style.visibility='hidden'", GetElementsById(googleAdsItemId).FirstOrDefault());
+            }
+            catch
+            {
+                // no need to process exception, it means that googe ads was just not visible at this time
+            }
         }
-
-        private void HideAds(IWebDriver driver)
-        {
-            IWebElement elem = driver.FindElement(By.Id("fixedban"));
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.visibility='hidden'", elem);
-        }
-
-        public ElementsCategoryPage selectCategory(string categoryName)
+           
+        public void SelectCategory(string categoryName)
         {            
-            IWebElement categoryElement = driver.FindElement(By.XPath(clickableDivForCategory(categoryName)));
-            new Actions(driver).MoveToElement(categoryElement).Click(categoryElement).Perform();
-
-            return new ElementsCategoryPage(driver);
+            IWebElement categoryElement = GetElement(By.XPath(clickableDivForCategory(categoryName)));
+            categoryElement.Click();
         }
     }
 }
