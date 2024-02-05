@@ -1,13 +1,4 @@
-﻿
-﻿using System;
-using System.Collections.Generic;
-﻿using System.Collections.ObjectModel;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using System.Linq;
-using OpenQA.Selenium.Support.UI;
-
-namespace SpecFlowSchool.Specs.Pages
+﻿namespace SpecFlowSchool.Specs.Pages
 {
     using SpecFlowSchool.Specs.Constants;
     using NUnit.Framework;
@@ -16,6 +7,7 @@ namespace SpecFlowSchool.Specs.Pages
     using OpenQA.Selenium;
     using SeleniumExtras.WaitHelpers;
     using System.Collections.ObjectModel;
+    using System;
 
     //COMMON ACTIONS FOR WEBDRIVER
     /// <summary>
@@ -23,8 +15,6 @@ namespace SpecFlowSchool.Specs.Pages
     /// This base class contains a useful set of helper methods for scripting Selenium. It should 
     /// encapsulate the common practices and apply sensible programming practices such as DRY.
     /// Keep this code clean & refactored.
-    /// 
-    /// It should not contain knowledge of any specific page elements, use SUTMainPage for those.
     /// </summary>
     public class PageBase
     {
@@ -246,14 +236,6 @@ namespace SpecFlowSchool.Specs.Pages
             return (lis == null || lis.Count == 0);
         }
 
-        //public string GetSelectedItemFromCombobox(By combobox)
-        //{
-        //    IWebElement chosenCombobox = Context.Driver.FindElement(combobox);
-        //    SelectElement itemSelected = new SelectElement(chosenCombobox);
-
-        //    return itemSelected.SelectedOption.Text;
-        //}
-
         public bool IsCheckboxSelected(By checkBox)
         {
             IWebElement Checkbox = Context.Driver.FindElement(checkBox);
@@ -262,9 +244,9 @@ namespace SpecFlowSchool.Specs.Pages
         }
 
         // Click By
-        public void ClickByXPath(string xpathQuery)
+        public void ClickByXPath(string xpathQuery, int maxWaitSeconds = MaxWaitSeconds)
         {
-            WaitForVisibility(By.XPath(xpathQuery));
+            WaitForVisibility(By.XPath(xpathQuery), maxWaitSeconds);
             var element = this.Context.Driver.FindElement(By.XPath(xpathQuery));
             Assert.IsNotNull(element);
             element.Click();
@@ -318,8 +300,12 @@ namespace SpecFlowSchool.Specs.Pages
         {
             return this.Context.Driver.Title;
         }
+        public void ExecuteScript(string script, params object[] args)
+        {
+            ((IJavaScriptExecutor)this.Context.Driver).ExecuteScript(script, args);
+        }
 
-        # region Protected Helper Methods for derived classes
+        #region Protected Helper Methods for derived classes
 
         /// <summary>
         /// Refactored all the "wait for this & that to be visible" stuff into a couple 

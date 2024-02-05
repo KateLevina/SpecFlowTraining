@@ -3,25 +3,17 @@ using OpenQA.Selenium.Interactions;
 
 namespace SpecFlowSchool.Specs.Pages
 {
-
     internal class ElementsCategoryPage : BaseCategoryPage
     {
-        //public ElementsCategoryPage(IWebDriver driver) : base(driver)
-        //{
-        //}
-
         public ElementsCategoryPage(PageContext context) : base(context)
         {
         }
 
         public void InteractWithButtonAccordingToItsType(string buttonTitle)
         {
-            Actions actions = new Actions(driver);
-
-            var btn = driver.FindElement(By.XPath($"//button[text()='{buttonTitle}']"));
+            Actions actions = new Actions(Context.Driver);
+            var btn = GetElement(By.XPath($"//button[text()='{buttonTitle}']"));
             
-            //TODO: need to find better solution
-            Thread.Sleep(1000);
             switch (buttonTitle)
             {
                 case "Click Me":
@@ -40,7 +32,7 @@ namespace SpecFlowSchool.Specs.Pages
 
         public bool CheckMessagePresence(string message)
         {
-            var expectedLabel = driver.FindElement(By.XPath($"//p[text()='{message}']"));
+            var expectedLabel = GetElement(By.XPath($"//p[text()='{message}']"));
             return expectedLabel != null;
         }
     }
