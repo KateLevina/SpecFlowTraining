@@ -21,6 +21,7 @@
         public static void WindowSetup()
         {
             Driver.Navigate().GoToUrl("about:blank");
+            Driver.Manage().Window.Maximize();
         }
 
         #region Browser Types
