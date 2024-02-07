@@ -1,12 +1,10 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using TechTalk.SpecFlow;
 
 namespace SpecFlowSchool.Specs.Pages
 {
     internal class ElementsCategoryPage : BaseCategoryPage
     {
-        private string buttonByTitle(string buttonTitle) => $"//button[text()='{buttonTitle}']";
+
         private const string tbUserNameId = "userName";
         private const string tbUserEmailId = "userEmail";
         private const string tbCurrentAddressId = "currentAddress";
@@ -16,40 +14,11 @@ namespace SpecFlowSchool.Specs.Pages
         private const string tbOutputCurrentAddressId = "currentAddress";
         private const string tbOutputPermanentAddressId = "permanentAddress";
         private string outputValueById(string id) => $"//*[@id='{id}']/ancestor::*[@id='output']";
-        //private string outputValueById(string id) => $"//*[@id='{id}']";
 
         public ElementsCategoryPage(PageContext context) : base(context) { }
 
-        public void InteractWithButtonAccordingToItsType(string btnTitle)
-        {
-            Actions actions = new Actions(Context.Driver);
-            var btn = GetElement(By.XPath(buttonByTitle(btnTitle)));
-            
-            switch (btnTitle)
-            {
-                case "Click Me":
-                    btn.Click();
-                    break;
-                case "Double Click Me":
-                    actions.DoubleClick(btn).Perform();
-                    break;
-                case "Right Click Me":
-                    actions.ContextClick(btn).Perform();
-                    break;
-                default:
-                    throw new NotImplementedException($"'{btnTitle}' type of button is not supported");
-            }
-        }
-
-        public bool CheckMessagePresence(string message)
-        {
-            var expectedLabel = GetElement(By.XPath($"//p[text()='{message}']"));
-            return expectedLabel != null;
-        }
-
         internal void ClickSubmit()
         {
-            //p((WebElement)GetElementsById("submit").First()).
             ClickById("submit");
         }
 

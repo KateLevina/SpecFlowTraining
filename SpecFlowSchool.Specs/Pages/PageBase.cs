@@ -19,7 +19,7 @@
     public class PageBase
     {
         protected readonly PageContext Context;
-        private const int MaxWaitSeconds = 30;
+        private const int MaxWaitSeconds = 10;
 
         public PageBase(PageContext context)
         {
@@ -244,9 +244,9 @@
         }
 
         // Click By
-        public void ClickByXPath(string xpathQuery, int maxWaitSeconds = MaxWaitSeconds)
+        public void ClickByXPath(string xpathQuery)
         {
-            WaitForVisibility(By.XPath(xpathQuery), maxWaitSeconds);
+            WaitForVisibility(By.XPath(xpathQuery));
             var element = this.Context.Driver.FindElement(By.XPath(xpathQuery));
             Assert.IsNotNull(element);
             element.Click();
@@ -329,5 +329,22 @@
             return WaitForVisibility(By.Id(id), maxWaitSeconds);
         }
         #endregion
+
+        public void HideAds()
+        {
+            try
+            {
+                var googleAdsItemId = "fixedban";
+                var ads = WaitForVisibility(By.Id(googleAdsItemId), 3);
+                if (ads != null)
+                {
+                    ExecuteScript("arguments[0].style.visibility='hidden'", GetElementsById(googleAdsItemId).FirstOrDefault());
+                }
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
