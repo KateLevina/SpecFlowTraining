@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using SpecFlowSchool.Specs.Pages;
 
 namespace SpecFlowSchool.Specs.StepDefinitions
@@ -29,7 +30,7 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         public void ThenMessageIsAddedToTheListBelow_(string message)
         {
             bool expectedMessageIsPresent = _elementsCategoryPage.CheckMessagePresence(message);
-            expectedMessageIsPresent.Should().BeTrue();
+            Assert.IsTrue(expectedMessageIsPresent, $"The following expected message was not found on the page: {message}");
         }
 
         [When(@"Submit button pressed")]

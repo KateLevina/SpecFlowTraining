@@ -5,11 +5,11 @@ namespace SpecFlowSchool.Specs.Pages
 {
     internal class BaseCategoryPage : PageBase
     {
-        private string clickableDivForSection(string sectionName) => $"//*[text()='{sectionName}']//ancestor::*[contains(@class, 'btn-light')]";
+        private string _originalWindow = "";
+        private string clickableDivForSection(string sectionName) => $"//span[text()='{sectionName}']//ancestor::li[contains(@class, 'btn-light')]";
         protected string buttonByTitle(string buttonTitle) => $"//button[text()='{buttonTitle}']";
         protected string footer => $"//footer";
 
-        private string _originalWindow;
         public BaseCategoryPage(PageContext context) : base(context)
         {
         }
@@ -22,17 +22,21 @@ namespace SpecFlowSchool.Specs.Pages
         public void SelectSection(string sectionName)
         {
             var section = GetElement(By.XPath(clickableDivForSection(sectionName)));
-            GetBuilder().MoveToElement(section);
-            HideAds();
-            section.Click();
+            GetBuilder().MoveToElement(section).Click().Perform();
         }
 
         public bool CheckMessagePresence(string message)
         {
-            var expectedLabel = GetElement(By.XPath($"//*[text()='{message}']"));
-            SwitchToOriginalWindow();
+            IWebElement expectedLabel;
+            try
+            {
+                expectedLabel = GetElement(By.XPath($"//*[text()='{message}']"));
+            }
+            finally
+            {
+                SwitchToOriginalWindow();
+            }
             return expectedLabel != null;
-
         }
 
         private void SwitchToNewTabOrWindow(string originalWindow)
@@ -51,13 +55,15 @@ namespace SpecFlowSchool.Specs.Pages
 
         private void SwitchToOriginalWindow()
         {
-            //Loop through until we find a new window handle
-            foreach (string window in Context.Driver.WindowHandles)
+            if (_originalWindow != Context.Driver.CurrentWindowHandle)
             {
-                if (window == _originalWindow)
+                foreach (string window in Context.Driver.WindowHandles)
                 {
-                    Context.Driver.SwitchTo().Window(window);
-                    break;
+                    if (window == _originalWindow)
+                    {
+                        Context.Driver.SwitchTo().Window(window);
+                        break;
+                    }
                 }
             }
         }

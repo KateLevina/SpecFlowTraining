@@ -15,7 +15,7 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         [Given(@"DemoQA Home page is opened")]
         public void GivenHttpsDemoqa_ComIsOpened()
         {
-            _homePage.NavigateTo(HomePage.DefaultLink);
+            // prepare home page - close all appreared popups/ads
             _homePage.CloseConsentPopup();
             _homePage.HideAds();
         }

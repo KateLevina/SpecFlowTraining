@@ -5,7 +5,7 @@ namespace SpecFlowSchool.Specs.StepDefinitions
     [Binding]
     internal class WindowsCategorySteps
     {
-        private const string sampleTextOnOpenedPage = "This is a sample page";
+        private const string SampleTextOnOpenedPage = "This is a sample page";
         private WindowsCategoryPage _windowsCategoryPage;
 
         public WindowsCategorySteps(WindowsCategoryPage windowsCategoryPage)
@@ -14,7 +14,7 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         }
 
         [When(@"(.*) button is pressed and switched to new handle")]
-        public void WhenButtonIsPressed(string buttonName)
+        public void WhenButtonIsPressedAndSwitchedToNewHandle(string buttonName)
         {
             _windowsCategoryPage.InteractWithButtonAccordingToItsType(buttonName);
         }
@@ -22,7 +22,7 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         [Then(@"Sample text is present on new page")]
         public void ThenThisIsASamplePageTestIsPresentOnPage()
         {
-            _windowsCategoryPage.CheckMessagePresence(sampleTextOnOpenedPage);
+            _windowsCategoryPage.CheckMessagePresence(SampleTextOnOpenedPage);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace SpecFlowSchool.Specs.Hooks
     [Binding]
     public class ScenarioHooks
     {
+        private const string DefaultPage = "https://demoqa.com";
         private readonly IObjectContainer objectContainer;
 
         public ScenarioHooks(IObjectContainer objectContainer)
@@ -18,6 +19,7 @@ namespace SpecFlowSchool.Specs.Hooks
         public void BeforeScenario()
         {
             this.objectContainer.RegisterInstanceAs(new PageContext(TestRunContext.Driver));
+            TestRunContext.Driver.Navigate().GoToUrl(DefaultPage);
         }
 
         [AfterScenario]

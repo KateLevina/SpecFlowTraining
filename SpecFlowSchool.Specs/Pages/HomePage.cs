@@ -4,7 +4,6 @@ namespace SpecFlowSchool.Specs.Pages
 {
     internal partial class HomePage : PageBase
     {
-        public const string DefaultLink = "https://demoqa.com";
         private const string btnConsentUseData = $"//button[contains(@class, 'fc-cta-consent')]";
         private string clickableDivForCategory(string categoryName) => $"//h5[text()='{categoryName}']//ancestor::div[contains(@class, 'card mt-4 top-card')]";
 
@@ -14,20 +13,16 @@ namespace SpecFlowSchool.Specs.Pages
         {
             try
             {
-                var consentButton = WaitForVisibility(By.XPath(btnConsentUseData), 2);
-                //if (consentButton != null)
-                //{
+                var consentButton =  GetElement(By.XPath(btnConsentUseData));
                 consentButton.Click();
-                //}
             }
-            catch
+            catch (NoSuchElementException)
             {
-                
+                // No need to process this exception.
+                // It means that popup with Consent button didn't appear so no need to close it.
             }
         }
 
-      
-           
         public void SelectCategory(string categoryName)
         {            
             IWebElement categoryElement = GetElement(By.XPath(clickableDivForCategory(categoryName)));

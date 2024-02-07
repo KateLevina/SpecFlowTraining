@@ -332,20 +332,9 @@
 
         public void HideAds()
         {
-            try
-            {
-                var googleAdsItemId = "fixedban";
-                var ads = WaitForVisibility(By.Id(googleAdsItemId), 3);
-                if (ads != null)
-                {
-                    ExecuteScript("arguments[0].style.visibility='hidden'", GetElementsById(googleAdsItemId).FirstOrDefault());
-                }
-            }
-            catch
-            {
-
-            }
+            var googleAdsItemId = "fixedban";
+            ExecuteScript("arguments[0].style.visibility='hidden'", GetElementsById(googleAdsItemId).FirstOrDefault());
         }
-      
+
     }
 }
