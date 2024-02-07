@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace SpecFlowSchool.Specs.Hooks
+﻿namespace SpecFlowSchool.Specs.Hooks
 {
     using System.Threading;
 
