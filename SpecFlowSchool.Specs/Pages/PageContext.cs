@@ -8,6 +8,7 @@
         public PageContext(IWebDriver driver)
         {
             this.Driver = driver;
+            Actions = new Actions(this.Driver);
         }
 
         public IWebDriver Driver { get; private set; }

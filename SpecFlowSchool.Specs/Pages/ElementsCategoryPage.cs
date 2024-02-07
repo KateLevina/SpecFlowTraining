@@ -19,7 +19,9 @@ namespace SpecFlowSchool.Specs.Pages
 
         internal void ClickSubmit()
         {
-            ClickById("submit");
+            HideFooter();
+            var btnSubmit = GetElementsById("submit").FirstOrDefault(); 
+            GetBuilder().MoveToElement(btnSubmit).Click().Perform();
         }
 
         internal void FillTextBoxSectionValues(Table table)

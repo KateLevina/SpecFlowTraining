@@ -293,7 +293,7 @@
         {
             WaitForVisibility(byCriterion);
             var element = this.Context.Driver.FindElement(byCriterion);
-            this.Context.Actions.MoveToElement(element).MoveByOffset(offX, offY).Click().Perform();
+            GetBuilder().MoveToElement(element).MoveByOffset(offX, offY).Click().Perform();
         }
 
         public string WindowTitle()
@@ -346,5 +346,6 @@
 
             }
         }
+      
     }
 }
