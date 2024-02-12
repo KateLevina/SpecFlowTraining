@@ -7,5 +7,4 @@
 /SpecFlowSchool/bin/Debug/net6.0
 /SpecFlowSchool/obj
 /.vs/SpecFlowSchool
-/SpecFlowSchool.Specs/Features/Elements.feature.cs
-/SpecFlowSchool.Specs/Features/Windows.feature.cs
+/SpecFlowSchool.Specs/Features/*.feature.cs

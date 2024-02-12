@@ -4,13 +4,15 @@ namespace SpecFlowSchool.Specs.Pages
 {
     internal class BaseCategoryPage : PageBase
     {
-        private string _originalWindow = "";
+        private const string OriginalWindowKey = "OriginalWindow";
+        protected ScenarioContext _scenarioContext;
         private string clickableDivForSection(string sectionName) => $"//span[text()='{sectionName}']//ancestor::li[contains(@class, 'btn-light')]";
         protected string buttonByTitle(string buttonTitle) => $"//button[text()='{buttonTitle}']";
         protected string footer => $"//footer";
 
-        public BaseCategoryPage(PageContext context) : base(context)
+        public BaseCategoryPage(PageContext context, ScenarioContext scenarioContext) : base(context)
         {
+            this._scenarioContext = scenarioContext;
         }
 
         public void HideFooter()
@@ -26,21 +28,21 @@ namespace SpecFlowSchool.Specs.Pages
 
         public bool CheckMessagePresence(string message)
         {
-            IWebElement expectedLabel;
+            bool messageIsPresent;
             try
             {
-                expectedLabel = GetElement(By.XPath($"//*[text()='{message}']"));
+                messageIsPresent = !string.IsNullOrEmpty(GetTextByXPath($"//*[text()='{message}']"));
             }
             finally
             {
                 SwitchToOriginalWindow();
             }
-            return expectedLabel != null;
+            return messageIsPresent;
         }
 
         private void SwitchToNewTabOrWindow(string originalWindow)
         {
-            _originalWindow = originalWindow;
+            _scenarioContext[OriginalWindowKey] = originalWindow;
             //Loop through until we find a new window handle
             foreach (string window in Context.Driver.WindowHandles)
             {
@@ -54,14 +56,17 @@ namespace SpecFlowSchool.Specs.Pages
 
         private void SwitchToOriginalWindow()
         {
-            if (_originalWindow != Context.Driver.CurrentWindowHandle)
+            if (_scenarioContext.ContainsKey(OriginalWindowKey))
             {
-                foreach (string window in Context.Driver.WindowHandles)
+                if (_scenarioContext[OriginalWindowKey].ToString() != Context.Driver.CurrentWindowHandle)
                 {
-                    if (window == _originalWindow)
+                    foreach (string window in Context.Driver.WindowHandles)
                     {
-                        Context.Driver.SwitchTo().Window(window);
-                        break;
+                        if (window == _scenarioContext[OriginalWindowKey].ToString())
+                        {
+                            Context.Driver.SwitchTo().Window(window);
+                            break;
+                        }
                     }
                 }
             }
@@ -77,13 +82,16 @@ namespace SpecFlowSchool.Specs.Pages
                 case "Double Click Me":
                     GetBuilder().DoubleClick(btn).Perform();
                     break;
-                case "Right Click Me":
-                    GetBuilder().ContextClick(btn).Perform();
-                    break;
                 case "New Tab":
                 case "New Window":
                     btn.Click();
                     SwitchToNewTabOrWindow(originalWindowHandle);
+                    break;
+                case "Right Click Me":
+                    // right click is not performing correctly with our default FindElement with scroll.
+                    // initialize it finding without scroll. 
+                    btn = Context.Driver.FindElement(By.XPath(buttonByTitle(btnTitle)));
+                    GetBuilder().ContextClick(btn).Perform();
                     break;
                 default:
                     btn.Click();

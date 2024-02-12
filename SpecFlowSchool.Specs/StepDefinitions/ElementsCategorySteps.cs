@@ -7,7 +7,6 @@ namespace SpecFlowSchool.Specs.StepDefinitions
     internal class ElementsCategorySteps
     {
         private ElementsCategoryPage _elementsCategoryPage;
-        private Table _textBoxValuesFromFeatureFile;
 
         public ElementsCategorySteps(ElementsCategoryPage elementsCategoryPage)
         {
@@ -42,14 +41,13 @@ namespace SpecFlowSchool.Specs.StepDefinitions
         [When(@"Valid values are entered in Text Box section fields")]
         public void WhenValidValuesAreEnteredInTextBoxSectionFields(Table table)
         {
-            _textBoxValuesFromFeatureFile = table;
             _elementsCategoryPage.FillTextBoxSectionValues(table);
         }
 
         [Then(@"Values displayed in table below are the same as values which were entered to the fields")]
         public void ThenValuesDisplayedInTableBelowAreTheSameAsValuesWhichWereEnteredToTheFields()
         {
-           _elementsCategoryPage.CheckOutputValues(_textBoxValuesFromFeatureFile);
+           _elementsCategoryPage.CheckOutputValues();
         }
     }
 }

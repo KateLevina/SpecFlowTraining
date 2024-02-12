@@ -15,7 +15,8 @@ namespace SpecFlowSchool.Specs.Pages
         private const string tbOutputPermanentAddressId = "permanentAddress";
         private string outputValueById(string id) => $"//p[@id='{id}']/ancestor::div[@id='output']";
 
-        public ElementsCategoryPage(PageContext context) : base(context) { }
+        public ElementsCategoryPage(PageContext context, ScenarioContext scenarioContext) 
+            : base(context, scenarioContext) { }
 
         internal void ClickSubmit()
         {
@@ -28,14 +29,16 @@ namespace SpecFlowSchool.Specs.Pages
 
         internal void FillTextBoxSectionValues(Table table)
         {
+            _scenarioContext["TextBoxValuesFromFeatureFile"] = table;
             GetElementsById(tbUserNameId).First().SendKeys(table.Rows[0][0]);
             GetElementsById(tbUserEmailId).First().SendKeys(table.Rows[0][1]);
             GetElementsById(tbCurrentAddressId).First().SendKeys(table.Rows[0][2]);
             GetElementsById(tbPermanentAddressId).First().SendKeys(table.Rows[0][3]);
         }
 
-        internal void CheckOutputValues(Table textBoxValuesFromFeatureFile)
+        internal void CheckOutputValues()
         {
+            Table textBoxValuesFromFeatureFile = (Table)_scenarioContext["TextBoxValuesFromFeatureFile"];
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(GetTextByXPath(outputValueById(tbOutputUserNameId)).Contains(textBoxValuesFromFeatureFile.Rows[0][0]));
